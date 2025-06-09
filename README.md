@@ -29,7 +29,7 @@ Welcome to my portfolio! This project highlights my work, skills, and creative j
 
 ## 📸 Screenshots
 
-![Portfolio Screenshot](./assets/screenshot.png)
+![Portfolio Screenshot](./public/screenshot.png)
 
 ## ✨ Getting Started
 
