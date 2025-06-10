@@ -87,7 +87,7 @@ const toggleTerminal = () => {
 </script>
 
 <template>
-  <section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
+  <section id="about" class="text-gray-50 py-20 px-4 sm:px-6 lg:px-8">
     <AnimatedBackground />
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16">
@@ -249,7 +249,7 @@ const toggleTerminal = () => {
                   <img 
                     src="../assets/images/book-cover.webp" 
                     alt="Book cover" 
-                    class="w-16 h-auto rounded shadow mr-4"
+                    class="w-full h-32 rounded shadow mr-4"
                     loading="lazy"
                   >
                   <div>
@@ -293,11 +293,11 @@ const toggleTerminal = () => {
         <!-- Photo Column (shown on bio tab) -->
         <div v-if="activeTab === 'bio'" class="relative">
           <div class="sticky top-24">
-            <div class="bg-gray-50 mx-auto dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div class=" mx-auto rounded-xl shadow-lg overflow-hidden">
               <img 
                 src="../assets/images/profile-photo.jpg" 
                 alt="Profile photo" 
-                class="w-80 h-auto mx-auto"
+                class="w-80 h-auto mx-auto rounded-xl"
                 loading="lazy"
               >
               <div class="p-6">
