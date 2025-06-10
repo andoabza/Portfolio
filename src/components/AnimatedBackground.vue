@@ -55,9 +55,15 @@ const init = () => {
   techLabels = new THREE.Group()
   techNames.forEach((name, i) => {
     const label = createTextLabel(name)
-    const angle = (i / techNames.length) * Math.PI * 2
-    const radius = 18
-    label.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 0)
+    const angle = i * 0.4
+    const spiralRadius = 10 + i * 0.3
+    const yOffset = (i - techNames.length / 2) * 0.7
+
+    label.position.set(
+      Math.cos(angle) * spiralRadius,
+      yOffset,
+      Math.sin(angle) * spiralRadius
+    )
     techLabels.add(label)
   })
   scene.add(techLabels)
@@ -75,7 +81,7 @@ const createTextLabel = (text) => {
   const texture = new THREE.CanvasTexture(canvas)
   const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true })
   const sprite = new THREE.Sprite(spriteMaterial)
-  sprite.scale.set(4, 1, 1)
+  sprite.scale.set(3.5, 0.9, 1)
   return sprite
 }
 
@@ -89,7 +95,9 @@ const animate = () => {
     p.position.z = Math.sin(p.userData.angle) * p.userData.radius
   })
 
-  techLabels.rotation.z = elapsed * 0.2
+  techLabels.rotation.y = elapsed * 0.1
+  techLabels.rotation.x = Math.sin(elapsed * 0.3) * 0.1
+
   particleGroup.rotation.y = elapsed * 0.1
 
   renderer.render(scene, camera)
