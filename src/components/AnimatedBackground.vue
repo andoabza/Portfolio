@@ -3,87 +3,81 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three'
 
 const canvas = ref(null)
+let scene, camera, renderer, clock, galaxyGroup
 
-let scene, camera, renderer, nodes = [], edges = [], group, clock
+const terminalTexts = [
+  'npm run dev',
+  'git commit -m "Initial commit"',
+  'yarn build',
+  'npx vite',
+  'node server.js',
+  'curl openai.com',
+  'ls -la',
+  'cd /projects/portfolio',
+  'code .',
+  'docker-compose up'
+]
 
-const NODE_COUNT = 80
-const EDGE_DISTANCE = 12
+const createTerminalPlane = (text) => {
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+  canvas.width = 512
+  canvas.height = 128
 
-const createNode = () => {
-  const geo = new THREE.SphereGeometry(0.5, 12, 12)
-  const mat = new THREE.MeshBasicMaterial({
-    color: new THREE.Color(`hsl(${Math.random() * 360}, 80%, 70%)`)
-  })
-  const mesh = new THREE.Mesh(geo, mat)
-  mesh.position.set(
-    (Math.random() - 0.5) * 40,
-    (Math.random() - 0.5) * 40,
-    (Math.random() - 0.5) * 40
-  )
-  return mesh
-}
+  // Background
+  ctx.fillStyle = '#000000dd'
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-const createEdges = () => {
-  const lines = []
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = i + 1; j < nodes.length; j++) {
-      const dist = nodes[i].position.distanceTo(nodes[j].position)
-      if (dist < EDGE_DISTANCE) {
-        const geom = new THREE.BufferGeometry().setFromPoints([
-          nodes[i].position,
-          nodes[j].position
-        ])
-        const mat = new THREE.LineBasicMaterial({
-          color: new THREE.Color('cyan'),
-          transparent: true,
-          opacity: 0.15
-        })
-        lines.push(new THREE.Line(geom, mat))
-      }
-    }
-  }
-  return lines
+  // Text
+  ctx.fillStyle = '#00ff88'
+  ctx.font = 'bold 24px monospace'
+  ctx.fillText(text, 20, 80)
+
+  const texture = new THREE.CanvasTexture(canvas)
+  const material = new THREE.SpriteMaterial({ map: texture, transparent: true })
+  const sprite = new THREE.Sprite(material)
+  sprite.scale.set(6, 1.5, 1)
+
+  return sprite
 }
 
 const init = () => {
   scene = new THREE.Scene()
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-  camera.position.z = 50
+  camera.position.z = 30
 
-  renderer = new THREE.WebGLRenderer({
-    canvas: canvas.value,
-    alpha: true,
-    antialias: true
-  })
+  renderer = new THREE.WebGLRenderer({ canvas: canvas.value, alpha: true, antialias: true })
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.setClearColor(0x000000, 0)
 
   clock = new THREE.Clock()
-  group = new THREE.Group()
+  galaxyGroup = new THREE.Group()
 
-  for (let i = 0; i < NODE_COUNT; i++) {
-    const node = createNode()
-    nodes.push(node)
-    group.add(node)
+  for (let i = 0; i < terminalTexts.length; i++) {
+    const sprite = createTerminalPlane(terminalTexts[i])
+    const angle = Math.random() * 2 * Math.PI
+    const radius = 15 + Math.random() * 10
+    const y = (Math.random() - 0.5) * 20
+
+    sprite.position.set(
+      Math.cos(angle) * radius,
+      y,
+      Math.sin(angle) * radius
+    )
+
+    galaxyGroup.add(sprite)
   }
 
-  edges = createEdges()
-  edges.forEach(e => group.add(e))
-
-  scene.add(group)
+  scene.add(galaxyGroup)
 }
 
 const animate = () => {
   const t = clock.getElapsedTime()
-  const scale = 1 + Math.sin(t * 1.5) * 0.05
-  group.scale.set(scale, scale, scale)
+  galaxyGroup.rotation.y = t * 0.03
 
-  group.rotation.y += 0.001
-  group.rotation.x = Math.sin(t * 0.2) * 0.05
-
-  edges.forEach(edge => {
-    edge.material.opacity = 0.1 + 0.05 * Math.sin(t * 5 + edge.id)
+  galaxyGroup.children.forEach((sprite, i) => {
+    sprite.material.opacity = 0.8 + Math.sin(t + i) * 0.2
   })
 
   renderer.render(scene, camera)
@@ -105,10 +99,15 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
   renderer?.dispose()
-  nodes.forEach(n => n.geometry.dispose())
 })
 </script>
 
 <template>
   <canvas ref="canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none" />
 </template>
+
+<style scoped>
+canvas {
+  background: black;
+}
+</style>
