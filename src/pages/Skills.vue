@@ -17,7 +17,7 @@ const skills = ref({
   ],
   backend: [
     { name: 'Node.js', level: 92, icon: 'nodejs', color: 'green' },
-    { name: 'Express', level: 88, icon: 'server', color: 'gray' },
+    { name: 'Express', level: 88, icon: 'server', color: 'teal' },
     { name: 'Python', level: 80, icon: 'python', color: 'blue' },
     { name: 'PostgreSQL', level: 85, icon: 'database', color: 'blue' }
   ],
