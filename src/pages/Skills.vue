@@ -150,15 +150,10 @@ const toggleView = () => {
               </div>
               <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                <SkillMeter 
-                  :skill="skill"
-                  class="h-full rounded-full transition-all duration-1000 ease-out"
-                />
-                <div 
-                  class="skill-meter h-full rounded-full transition-all duration-1000 ease-out"
-                  :class="`bg-${skill.color}-500`"
-                  :style="{ width: '0%' }"
-                  :data-width="`${skill.level}%`"
-                />
+  :name="skill.name"
+  :level="skill.level"
+  :color="skill.color"
+/>
               </div>
             </div>
           </div>
