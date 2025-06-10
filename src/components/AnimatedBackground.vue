@@ -6,12 +6,15 @@ const canvas = ref(null)
 
 let scene, camera, renderer, coreMesh, particleGroup, techLabels, clock
 let particles = []
-const techNames = ['HTML', 'CSS', 'JavaScript', 'Vue', 'Node', 'Three.js', 'React', 'MongoDB', 'Docker', 'TypeScript']
+const techNames = [
+  'HTML', 'CSS', 'JavaScript', 'Vue', 'Node', 'Three.js', 'React', 'MongoDB', 'Docker', 'TypeScript',
+  'GraphQL', 'WebGL', 'Sass', 'Vite', 'Express', 'Python', 'PostgreSQL', 'Redis', 'CI/CD', 'Kubernetes'
+]
 
 const init = () => {
   scene = new THREE.Scene()
   camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
-  camera.position.set(0, 0, 30)
+  camera.position.set(0, 0, 45)
 
   renderer = new THREE.WebGLRenderer({ canvas: canvas.value, alpha: true, antialias: true })
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -20,23 +23,21 @@ const init = () => {
 
   clock = new THREE.Clock()
 
-  // Core Sphere (Your Identity)
-  const coreGeometry = new THREE.IcosahedronGeometry(2, 1)
+  const coreGeometry = new THREE.IcosahedronGeometry(2.5, 1)
   const coreMaterial = new THREE.MeshBasicMaterial({ color: '#00ffff', wireframe: true })
   coreMesh = new THREE.Mesh(coreGeometry, coreMaterial)
   scene.add(coreMesh)
 
-  // Particle Group
   particleGroup = new THREE.Group()
   scene.add(particleGroup)
 
   const particleGeo = new THREE.SphereGeometry(0.1, 8, 8)
   const particleMat = new THREE.MeshBasicMaterial({ color: '#7f00ff' })
 
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 300; i++) {
     const particle = new THREE.Mesh(particleGeo, particleMat)
     const angle = Math.random() * Math.PI * 2
-    const radius = 10 + Math.random() * 10
+    const radius = 15 + Math.random() * 20
     particle.userData = {
       angle,
       radius,
@@ -44,19 +45,18 @@ const init = () => {
     }
     particle.position.set(
       Math.cos(angle) * radius,
-      (Math.random() - 0.5) * 10,
+      (Math.random() - 0.5) * 20,
       Math.sin(angle) * radius
     )
     particleGroup.add(particle)
     particles.push(particle)
   }
 
-  // Tech Label Sprites
   techLabels = new THREE.Group()
   techNames.forEach((name, i) => {
     const label = createTextLabel(name)
     const angle = (i / techNames.length) * Math.PI * 2
-    const radius = 8
+    const radius = 18
     label.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 0)
     techLabels.add(label)
   })
@@ -81,7 +81,6 @@ const createTextLabel = (text) => {
 
 const animate = () => {
   const elapsed = clock.getElapsedTime()
-
   coreMesh.rotation.y += 0.002
 
   particles.forEach((p) => {
