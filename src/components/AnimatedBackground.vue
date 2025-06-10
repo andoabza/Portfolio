@@ -45,9 +45,7 @@ const createGeneLabel = (text, color) => {
 }
 
 const geneObjects = []
-const geneScales = []
 
-// Setup scene and objects
 const init = () => {
   scene = new THREE.Scene()
   camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
@@ -84,7 +82,6 @@ const init = () => {
     helixGroup.add(right)
 
     geneObjects.push(left, right)
-    geneScales.push(0, 0)
 
     // Connector rods
     const connectorGeo = new THREE.CylinderGeometry(0.05, 0.05, radius * 2, 8)
@@ -98,7 +95,6 @@ const init = () => {
   scene.add(helixGroup)
 }
 
-// Animate and render scene
 const animate = () => {
   const elapsed = clock.getElapsedTime()
   helixGroup.rotation.y = elapsed * 0.3
@@ -110,11 +106,17 @@ const animate = () => {
     sprite.material.opacity = pulse
   })
 
-  // Animate genes scale based on scroll (simple approximation)
-  const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight)
+  // Animate genes scale based on scroll (improved)
+  const scrollPercent = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight), 1)
   geneObjects.forEach((sprite, idx) => {
-    const targetScale = Math.min(1, Math.max(0, scrollPercent * techGenes.length * 2 - idx / 2))
-    sprite.scale.lerp(new THREE.Vector3(targetScale * 3, targetScale * 0.8, 1), 0.1)
+    // Each gene scales in after a fraction of scroll to create progressive reveal
+    const revealPoint = idx / geneObjects.length
+    let scaleFactor = 0
+    if (scrollPercent > revealPoint) {
+      scaleFactor = Math.min(1, (scrollPercent - revealPoint) * geneObjects.length)
+    }
+    const targetScale = scaleFactor * 3
+    sprite.scale.lerp(new THREE.Vector3(targetScale, targetScale * 0.27, 1), 0.1)
   })
 
   renderer.render(scene, camera)
@@ -127,13 +129,10 @@ const onMouseMove = (event) => {
   mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
   mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
 }
-window.addEventListener('mousemove', onMouseMove)
 
-// Check hover with raycaster and update popup info position
 const checkHover = () => {
   raycaster.setFromCamera(mouse, camera)
   const intersects = raycaster.intersectObjects(geneObjects)
-
   if (intersects.length > 0) {
     const obj = intersects[0].object
     const index = geneObjects.indexOf(obj)
@@ -148,7 +147,6 @@ const checkHover = () => {
   hoveredGene.index = null
 }
 
-// Resize handler
 const onResize = () => {
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
@@ -160,7 +158,8 @@ onMounted(() => {
   animate()
   window.addEventListener('resize', onResize)
   window.addEventListener('mousemove', onMouseMove)
-  // Use animation frame to regularly check hover
+
+  // Hover check loop
   const hoverLoop = () => {
     checkHover()
     requestAnimationFrame(hoverLoop)
