@@ -3,48 +3,35 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three'
 
 const canvas = ref(null)
-let scene, camera, renderer, clock, galaxyGroup
+let scene, camera, renderer, clock, helixGroup
 
-const terminalTexts = [
-  'npm run dev',
-  'git commit -m "Initial commit"',
-  'yarn build',
-  'npx vite',
-  'node server.js',
-  'curl openai.com',
-  'ls -la',
-  'cd /projects/portfolio',
-  'code .',
-  'docker-compose up'
+const techGenes = [
+  'HTML', 'CSS', 'JavaScript', 'Vue',
+  'React', 'Node.js', 'Express', 'MongoDB',
+  'PostgreSQL', 'Docker', 'GraphQL', 'TypeScript',
+  'Three.js', 'Vite', 'TailwindCSS', 'OpenAI'
 ]
 
-const createTerminalPlane = (text) => {
+const createGeneLabel = (text, color) => {
   const canvas = document.createElement('canvas')
+  canvas.width = 256
+  canvas.height = 64
   const ctx = canvas.getContext('2d')
-  canvas.width = 512
-  canvas.height = 128
-
-  // Background
-  ctx.fillStyle = '#000000dd'
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-  // Text
-  ctx.fillStyle = '#00ff88'
-  ctx.font = 'bold 24px monospace'
-  ctx.fillText(text, 20, 80)
+  ctx.fillStyle = color
+  ctx.font = 'bold 28px monospace'
+  ctx.fillText(text, 10, 40)
 
   const texture = new THREE.CanvasTexture(canvas)
   const material = new THREE.SpriteMaterial({ map: texture, transparent: true })
   const sprite = new THREE.Sprite(material)
-  sprite.scale.set(6, 1.5, 1)
-
+  sprite.scale.set(3, 0.8, 1)
   return sprite
 }
 
 const init = () => {
   scene = new THREE.Scene()
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-  camera.position.z = 30
+  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
+  camera.position.set(0, 0, 25)
 
   renderer = new THREE.WebGLRenderer({ canvas: canvas.value, alpha: true, antialias: true })
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -52,34 +39,40 @@ const init = () => {
   renderer.setClearColor(0x000000, 0)
 
   clock = new THREE.Clock()
-  galaxyGroup = new THREE.Group()
+  helixGroup = new THREE.Group()
 
-  for (let i = 0; i < terminalTexts.length; i++) {
-    const sprite = createTerminalPlane(terminalTexts[i])
-    const angle = Math.random() * 2 * Math.PI
-    const radius = 15 + Math.random() * 10
-    const y = (Math.random() - 0.5) * 20
+  const turns = 5
+  const spacing = 1.4
+  const radius = 4
 
-    sprite.position.set(
-      Math.cos(angle) * radius,
-      y,
-      Math.sin(angle) * radius
-    )
+  for (let i = 0; i < techGenes.length; i++) {
+    const angle = i * Math.PI / 4
+    const y = i * spacing - (techGenes.length * spacing) / 2
 
-    galaxyGroup.add(sprite)
+    const left = createGeneLabel(techGenes[i], '#00ffff')
+    const right = createGeneLabel(techGenes[i], '#ff00ff')
+
+    left.position.set(Math.cos(angle) * radius, y, Math.sin(angle) * radius)
+    right.position.set(-Math.cos(angle) * radius, y, -Math.sin(angle) * radius)
+
+    helixGroup.add(left)
+    helixGroup.add(right)
+
+    const connectorGeo = new THREE.CylinderGeometry(0.05, 0.05, radius * 2, 8)
+    const connectorMat = new THREE.MeshBasicMaterial({ color: '#444444' })
+    const connector = new THREE.Mesh(connectorGeo, connectorMat)
+    connector.position.set(0, y, 0)
+    connector.rotation.z = angle
+    helixGroup.add(connector)
   }
 
-  scene.add(galaxyGroup)
+  scene.add(helixGroup)
 }
 
 const animate = () => {
   const t = clock.getElapsedTime()
-  galaxyGroup.rotation.y = t * 0.03
-
-  galaxyGroup.children.forEach((sprite, i) => {
-    sprite.material.opacity = 0.8 + Math.sin(t + i) * 0.2
-  })
-
+  helixGroup.rotation.y = t * 0.3
+  helixGroup.rotation.x = Math.sin(t * 0.1) * 0.1
   renderer.render(scene, camera)
   requestAnimationFrame(animate)
 }
