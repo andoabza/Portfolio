@@ -1,58 +1,48 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three'
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 
 const canvas = ref(null)
 
-let scene, camera, renderer, composer, cells = [], connections = [], group, clock
+let scene, camera, renderer, nodes = [], edges = [], group, clock
 
-const createCell = () => {
-  const geometry = new THREE.SphereGeometry(0.5, 16, 16)
-  const material = new THREE.MeshBasicMaterial({
-    color: new THREE.Color(`hsl(${Math.random() * 360}, 100%, 70%)`),
-    transparent: true,
-    opacity: 0.5
+const NODE_COUNT = 80
+const EDGE_DISTANCE = 12
+
+const createNode = () => {
+  const geo = new THREE.SphereGeometry(0.5, 12, 12)
+  const mat = new THREE.MeshBasicMaterial({
+    color: new THREE.Color(`hsl(${Math.random() * 360}, 80%, 70%)`)
   })
-  const cell = new THREE.Mesh(geometry, material)
-  cell.position.set(
+  const mesh = new THREE.Mesh(geo, mat)
+  mesh.position.set(
     (Math.random() - 0.5) * 40,
     (Math.random() - 0.5) * 40,
     (Math.random() - 0.5) * 40
   )
-  cell.userData.velocity = new THREE.Vector3(
-    (Math.random() - 0.5) * 0.01,
-    (Math.random() - 0.5) * 0.01,
-    (Math.random() - 0.5) * 0.01
-  )
-  return cell
+  return mesh
 }
 
-const updateConnections = () => {
-  connections.forEach(line => scene.remove(line))
-  connections = []
-
-  for (let i = 0; i < cells.length; i++) {
-    for (let j = i + 1; j < cells.length; j++) {
-      const dist = cells[i].position.distanceTo(cells[j].position)
-      if (dist < 6) {
+const createEdges = () => {
+  const lines = []
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dist = nodes[i].position.distanceTo(nodes[j].position)
+      if (dist < EDGE_DISTANCE) {
         const geom = new THREE.BufferGeometry().setFromPoints([
-          cells[i].position,
-          cells[j].position
+          nodes[i].position,
+          nodes[j].position
         ])
         const mat = new THREE.LineBasicMaterial({
-          color: new THREE.Color('white'),
+          color: new THREE.Color('cyan'),
           transparent: true,
-          opacity: 0.2 + (1 - dist / 6) * 0.4
+          opacity: 0.15
         })
-        const line = new THREE.Line(geom, mat)
-        connections.push(line)
-        scene.add(line)
+        lines.push(new THREE.Line(geom, mat))
       }
     }
   }
+  return lines
 }
 
 const init = () => {
@@ -69,44 +59,34 @@ const init = () => {
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.setClearColor(0x000000, 0)
 
-  composer = new EffectComposer(renderer)
-  composer.addPass(new RenderPass(scene, camera))
-  composer.addPass(new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    1.2, 0.4, 0.6
-  ))
-
-  group = new THREE.Group()
   clock = new THREE.Clock()
+  group = new THREE.Group()
 
-  for (let i = 0; i < 80; i++) {
-    const cell = createCell()
-    group.add(cell)
-    cells.push(cell)
+  for (let i = 0; i < NODE_COUNT; i++) {
+    const node = createNode()
+    nodes.push(node)
+    group.add(node)
   }
+
+  edges = createEdges()
+  edges.forEach(e => group.add(e))
 
   scene.add(group)
 }
 
 const animate = () => {
-  const elapsed = clock.getElapsedTime()
-  group.rotation.y = Math.sin(elapsed * 0.05) * 0.5
+  const t = clock.getElapsedTime()
+  const scale = 1 + Math.sin(t * 1.5) * 0.05
+  group.scale.set(scale, scale, scale)
 
-  cells.forEach(cell => {
-    cell.position.add(cell.userData.velocity)
+  group.rotation.y += 0.001
+  group.rotation.x = Math.sin(t * 0.2) * 0.05
 
-    // Soft bounce
-    if (Math.abs(cell.position.x) > 20) cell.userData.velocity.x *= -1
-    if (Math.abs(cell.position.y) > 20) cell.userData.velocity.y *= -1
-    if (Math.abs(cell.position.z) > 20) cell.userData.velocity.z *= -1
-
-    // Pulse
-    const scale = 1 + Math.sin(elapsed * 2 + cell.position.x) * 0.2
-    cell.scale.set(scale, scale, scale)
+  edges.forEach(edge => {
+    edge.material.opacity = 0.1 + 0.05 * Math.sin(t * 5 + edge.id)
   })
 
-  updateConnections()
-  composer.render()
+  renderer.render(scene, camera)
   requestAnimationFrame(animate)
 }
 
@@ -114,7 +94,6 @@ const handleResize = () => {
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight)
-  composer.setSize(window.innerWidth, window.innerHeight)
 }
 
 onMounted(() => {
@@ -126,7 +105,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
   renderer?.dispose()
-  cells.forEach(c => c.geometry.dispose())
+  nodes.forEach(n => n.geometry.dispose())
 })
 </script>
 
