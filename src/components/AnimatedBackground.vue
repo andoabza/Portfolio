@@ -4,18 +4,14 @@ import * as THREE from 'three'
 
 const canvas = ref(null)
 
-let scene, camera, renderer, clock, meshGroup
-let geometry, material, points, lines
-const gridSize = 30
-const waveAmplitude = 2
-const waveFrequency = 0.3
+let scene, camera, renderer, coreMesh, particleGroup, techLabels, clock
+let particles = []
+const techNames = ['HTML', 'CSS', 'JavaScript', 'Vue', 'Node', 'Three.js', 'React', 'MongoDB', 'Docker', 'TypeScript']
 
 const init = () => {
   scene = new THREE.Scene()
-
   camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
-  camera.position.set(0, 10, 25)
-  camera.lookAt(0, 0, 0)
+  camera.position.set(0, 0, 30)
 
   renderer = new THREE.WebGLRenderer({ canvas: canvas.value, alpha: true, antialias: true })
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -24,95 +20,84 @@ const init = () => {
 
   clock = new THREE.Clock()
 
-  // Geometry setup: grid points
-  geometry = new THREE.BufferGeometry()
-  const positions = []
-  const colors = []
-  const indices = []
+  // Core Sphere (Your Identity)
+  const coreGeometry = new THREE.IcosahedronGeometry(2, 1)
+  const coreMaterial = new THREE.MeshBasicMaterial({ color: '#00ffff', wireframe: true })
+  coreMesh = new THREE.Mesh(coreGeometry, coreMaterial)
+  scene.add(coreMesh)
 
-  const color1 = new THREE.Color('#00ffff') // neon cyan
-  const color2 = new THREE.Color('#7f00ff') // neon purple
+  // Particle Group
+  particleGroup = new THREE.Group()
+  scene.add(particleGroup)
 
-  // Generate grid points in XZ plane
-  for (let i = 0; i <= gridSize; i++) {
-    for (let j = 0; j <= gridSize; j++) {
-      const x = (i - gridSize / 2)
-      const z = (j - gridSize / 2)
-      const y = 0 // initial flat plane, y will animate as wave
+  const particleGeo = new THREE.SphereGeometry(0.1, 8, 8)
+  const particleMat = new THREE.MeshBasicMaterial({ color: '#7f00ff' })
 
-      positions.push(x, y, z)
-
-      // color gradient based on position
-      const lerpFactor = i / gridSize
-      const color = color1.clone().lerp(color2, lerpFactor)
-      colors.push(color.r, color.g, color.b)
+  for (let i = 0; i < 200; i++) {
+    const particle = new THREE.Mesh(particleGeo, particleMat)
+    const angle = Math.random() * Math.PI * 2
+    const radius = 10 + Math.random() * 10
+    particle.userData = {
+      angle,
+      radius,
+      speed: 0.001 + Math.random() * 0.002
     }
+    particle.position.set(
+      Math.cos(angle) * radius,
+      (Math.random() - 0.5) * 10,
+      Math.sin(angle) * radius
+    )
+    particleGroup.add(particle)
+    particles.push(particle)
   }
 
-  // Create indices for connecting lines (horizontal and vertical grid lines)
-  for (let i = 0; i < gridSize; i++) {
-    for (let j = 0; j < gridSize; j++) {
-      const idx = i * (gridSize + 1) + j
-
-      // horizontal line
-      indices.push(idx, idx + 1)
-      // vertical line
-      indices.push(idx, idx + gridSize + 1)
-    }
-  }
-
-  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
-  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
-  geometry.setIndex(indices)
-
-  // Points material (glowing nodes)
-  material = new THREE.PointsMaterial({
-    size: 0.25,
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.8,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
+  // Tech Label Sprites
+  techLabels = new THREE.Group()
+  techNames.forEach((name, i) => {
+    const label = createTextLabel(name)
+    const angle = (i / techNames.length) * Math.PI * 2
+    const radius = 8
+    label.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 0)
+    techLabels.add(label)
   })
+  scene.add(techLabels)
+}
 
-  points = new THREE.Points(geometry, material)
-  scene.add(points)
+const createTextLabel = (text) => {
+  const canvas = document.createElement('canvas')
+  canvas.width = 256
+  canvas.height = 64
+  const ctx = canvas.getContext('2d')
+  ctx.fillStyle = '#00ffff'
+  ctx.font = 'bold 32px monospace'
+  ctx.fillText(text, 10, 40)
 
-  // Lines for connections
-  const lineMaterial = new THREE.LineBasicMaterial({
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.4,
-  })
-
-  lines = new THREE.LineSegments(geometry, lineMaterial)
-  scene.add(lines)
+  const texture = new THREE.CanvasTexture(canvas)
+  const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true })
+  const sprite = new THREE.Sprite(spriteMaterial)
+  sprite.scale.set(4, 1, 1)
+  return sprite
 }
 
 const animate = () => {
   const elapsed = clock.getElapsedTime()
-  const positions = geometry.attributes.position.array
 
-  // Animate Y positions with wave function
-  for (let i = 0; i <= gridSize; i++) {
-    for (let j = 0; j <= gridSize; j++) {
-      const idx = 3 * (i * (gridSize + 1) + j)
-      const x = positions[idx]
-      const z = positions[idx + 2]
-      positions[idx + 1] = Math.sin(elapsed * 2 + x * waveFrequency + z * waveFrequency) * waveAmplitude
-    }
-  }
+  coreMesh.rotation.y += 0.002
 
-  geometry.attributes.position.needsUpdate = true
+  particles.forEach((p) => {
+    p.userData.angle += p.userData.speed
+    p.position.x = Math.cos(p.userData.angle) * p.userData.radius
+    p.position.z = Math.sin(p.userData.angle) * p.userData.radius
+  })
 
-  // Slight slow rotation for dynamic camera feel
-  scene.rotation.y = elapsed * 0.1
+  techLabels.rotation.z = elapsed * 0.2
+  particleGroup.rotation.y = elapsed * 0.1
 
   renderer.render(scene, camera)
   requestAnimationFrame(animate)
 }
 
-const onResize = () => {
+const handleResize = () => {
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -121,12 +106,12 @@ const onResize = () => {
 onMounted(() => {
   init()
   animate()
-  window.addEventListener('resize', onResize)
+  window.addEventListener('resize', handleResize)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', onResize)
-  renderer.dispose()
+  window.removeEventListener('resize', handleResize)
+  renderer?.dispose()
 })
 </script>
 
@@ -136,7 +121,6 @@ onUnmounted(() => {
 
 <style scoped>
 canvas {
-  background: black;
-  display: block;
+  background-color: black;
 }
 </style>
