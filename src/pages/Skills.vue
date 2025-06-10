@@ -17,13 +17,13 @@ const skills = ref({
   ],
   backend: [
     { name: 'Node.js', level: 92, icon: 'nodejs', color: 'green' },
-    { name: 'Express', level: 88, icon: 'server', color: 'teal' },
+    { name: 'Express', level: 88, icon: 'server', color: 'green' },
     { name: 'Python', level: 80, icon: 'python', color: 'blue' },
     { name: 'PostgreSQL', level: 85, icon: 'database', color: 'blue' }
   ],
   devops: [
     { name: 'Docker', level: 85, icon: 'docker', color: 'blue' },
-    { name: 'AWS', level: 75, icon: 'aws', color: 'orange' },
+    { name: 'AWS', level: 75, icon: 'aws', color: 'green' },
     { name: 'CI/CD', level: 80, icon: 'cicd', color: 'purple' },
     { name: 'Kubernetes', level: 70, icon: 'kubernetes', color: 'blue' }
   ],
