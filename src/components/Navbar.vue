@@ -63,7 +63,7 @@ onMounted(() => {
           href="#home" 
           class="flex-shrink-0 flex items-center text-xl font-bold text-primary-600 dark:text-primary-400"
         >
-          <img src="../assets/andamlak-logo.png" alt="logo" width="80" />
+          <img src="../assets/andamlak-logo.png" alt="logo" width="100" />
         </a>
         
         <!-- Desktop Navigation -->

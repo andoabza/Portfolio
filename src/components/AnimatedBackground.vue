@@ -28,9 +28,9 @@ const init = () => {
 
   scene = new THREE.Scene()
 
-  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
 
-  camera.position.set(0, 0, 45)
+  camera.position.set(0, 0, 10)
 
 
 
@@ -50,7 +50,7 @@ const init = () => {
 
   const coreGeometry = new THREE.IcosahedronGeometry(2.5, 1)
 
-  const coreMaterial = new THREE.MeshBasicMaterial({ color: '#00ffff', wireframe: true })
+  const coreMaterial = new THREE.MeshBasicMaterial({ color: 'blue', wireframe: true })
 
   coreMesh = new THREE.Mesh(coreGeometry, coreMaterial)
 
@@ -64,9 +64,9 @@ const init = () => {
 
 
 
-  const particleGeo = new THREE.SphereGeometry(0.1, 8, 8)
+  const particleGeo = new THREE.SphereGeometry(0.3, Math.random(5, 15), 8)
 
-  const particleMat = new THREE.MeshBasicMaterial({ color: '#7f00ff' })
+  const particleMat = new THREE.MeshBasicMaterial({ color: 'red' })
 
 
 
@@ -114,9 +114,9 @@ const init = () => {
 
     const angle = i * 0.4
 
-    const spiralRadius = 10 + i * 0.3
+    const spiralRadius = 10 + i * 0.1
 
-    const yOffset = (i - techNames.length / 2) * 0.7
+    const yOffset = (i - techNames.length / 2) * 0.4
 
 
 

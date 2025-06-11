@@ -11,49 +11,49 @@ useScrollAnimation()
 
 const projects = ref([
   {
-    title: 'E-Commerce Platform',
-    description: 'A full-featured online store with cart functionality, user authentication, and payment processing.',
-    technologies: ['Vue 3', 'Nuxt.js', 'Node.js', 'MongoDB', 'Stripe'],
-    image: '/images/project-ecommerce.webp',
+    title: 'Ethiotravel Platform',
+    description: 'A full-featured a fully functional travel app.',
+    technologies: ['Vue 3', 'Nuxt.js', 'Node.js', 'MongoDB', 'Python'],
+    image: '../assets/images/ethiotravel-photo.png',
     links: [
-      { label: 'Live Demo', url: 'https://ecommerce-demo.com' },
-      { label: 'View Code', url: 'https://github.com/andoabza/ecommerce' }
+      { label: 'Live Demo', url: 'https://ethiotravel..vercel.app' },
+      { label: 'View Code', url: 'https://github.com/andoabza/ethiotravel' }
     ],
     features: [
-      'Product catalog with filters',
-      'Shopping cart & checkout',
+      'Address with filters',
+      'Map',
       'User dashboard',
-      'Admin panel'
+      'Places'
     ]
   },
   {
-    title: 'Task Management App',
-    description: 'Kanban-style productivity tool with real-time collaboration features and task tracking.',
-    technologies: ['Vue 3', 'Firebase', 'Tailwind CSS', 'WebSockets'],
-    image: '/images/project-taskmanager.webp',
+    title: 'Cloud Managment App',
+    description: 'Kanban-style Cloud tool with real-time collaboration features and Cloud tracking.',
+    technologies: ['React', 'Laravel', 'Nodejs', 'Tailwind CSS', 'WebSockets'],
+    image: '../assets/images/cloudytech-photo.png',
     links: [
-      { label: 'Live Demo', url: 'https://tasks-demo.com' },
-      { label: 'View Code', url: 'https://github.com/andoabza/taskmanager' }
+      { label: 'Live Demo', url: 'https://cloudy.42web.io' },
+      { label: 'View Code', url: 'https://github.com/andoabza/Cloudytech' }
     ],
     features: [
-      'Drag & drop interface',
+      'Cloud interface',
       'Real-time updates',
       'Team collaboration',
       'Progress tracking'
     ]
   },
   {
-    title: 'Portfolio Template',
-    description: 'Open-source developer portfolio template with interactive elements and animations.',
-    technologies: ['Vue 3', 'Three.js', 'GSAP', 'Tailwind CSS'],
-    image: '/images/project-portfolio.webp',
+    title: 'Betna',
+    description: 'Online House Renting App.',
+    technologies: ['Vite', 'React', 'Nodejs', 'Tailwind CSS'],
+    image: '../assets/images/Betna.webp',
     links: [
-      { label: 'Live Demo', url: 'https://portfolio-demo.com' },
-      { label: 'View Code', url: 'https://github.com/andoabza/portfolio' }
+      { label: 'Live Demo', url: 'https://betna.vercel.app' },
+      { label: 'View Code', url: 'https://github.com/andoabza/Betna' }
     ],
     features: [
-      '3D animations',
-      'Interactive terminal',
+      'Search',
+      'Filtering Property',
       'Dark/light mode',
       'Performance optimized'
     ]
