@@ -71,9 +71,9 @@ const init = () => {
 
 const createTextLabel = (text) => {
   const canvas = document.createElement('canvas')
-  canvas.width = 256
+  canvas.width = 216
   canvas.height = 64
-  const ctx = canvas.getContext('2d')
+  const ctx = canvas.getContext('3d')
   ctx.fillStyle = '#00ffff'
   ctx.font = 'bold 32px monospace'
   ctx.fillText(text, 10, 40)
@@ -123,7 +123,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <canvas ref="canvas" class="fixed top-0 left-0 h-full -z-10 pointer-events-none" />
+  <canvas ref="canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none" />
 </template>
 
 <style scoped>
