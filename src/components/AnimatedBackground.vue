@@ -123,7 +123,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <canvas ref="canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none" />
+  <canvas ref="canvas" class="fixed top-0 left-0 w-full h-full z-1 pointer-events-none" />
 </template>
 
 <style scoped>
