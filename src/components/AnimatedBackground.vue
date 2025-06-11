@@ -28,7 +28,7 @@ const init = () => {
 
   scene = new THREE.Scene()
 
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
+  camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000)
 
   camera.position.set(0, 0, 10)
 
@@ -66,7 +66,7 @@ const init = () => {
 
   const particleGeo = new THREE.SphereGeometry(0.3, Math.random(5, 15), 8)
 
-  const particleMat = new THREE.MeshBasicMaterial({ color: 'red' })
+  const particleMat = new THREE.MeshBasicMaterial({ color: 'grey' })
 
 
 
