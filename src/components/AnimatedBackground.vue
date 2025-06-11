@@ -23,7 +23,7 @@ const init = () => {
 
   clock = new THREE.Clock()
 
-  const coreGeometry = new THREE.IcosahedronGeometry(2.5, 1)
+  const coreGeometry = new THREE.IcosahedronGeometry(3.5, 1)
   const coreMaterial = new THREE.MeshBasicMaterial({ color: '#00ffff', wireframe: true })
   coreMesh = new THREE.Mesh(coreGeometry, coreMaterial)
   scene.add(coreMesh)
@@ -71,7 +71,7 @@ const init = () => {
 
 const createTextLabel = (text) => {
   const canvas = document.createElement('canvas')
-  canvas.width = 216
+  canvas.width = 256
   canvas.height = 64
   const ctx = canvas.getContext('3d')
   ctx.fillStyle = '#00ffff'
