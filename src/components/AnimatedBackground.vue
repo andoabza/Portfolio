@@ -64,7 +64,7 @@ const init = () => {
 
 
 
-  const particleGeo = new THREE.SphereGeometry(0.3, Math.random(5, 15), 8)
+  const particleGeo = new THREE.SphereGeometry(0.3, 9, 9)
 
   const particleMat = new THREE.MeshBasicMaterial({ color: 'grey' })
 
