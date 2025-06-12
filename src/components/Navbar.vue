@@ -52,12 +52,13 @@ onMounted(() => {
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
+
         <!-- Logo -->
         <a href="#home" class="flex items-center text-xl font-bold text-primary-600 dark:text-primary-400">
           <img src="../assets/andamlak-logo.png" alt="logo" class="h-10 w-auto" />
         </a>
 
-        <!-- Desktop Nav -->
+        <!-- Desktop Navigation (Hidden on Mobile) -->
         <nav class="hidden md:flex space-x-6">
           <a
             v-for="link in navLinks"
@@ -69,33 +70,35 @@ onMounted(() => {
           </a>
         </nav>
 
-        <!-- Theme Toggle -->
-        <button
-          @click="themeStore.toggleTheme"
-          class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition"
-          aria-label="Toggle Theme"
-        >
-          <MoonIcon v-if="themeStore.darkMode" class="h-5 w-5" />
-          <SunIcon v-else class="h-5 w-5" />
-        </button>
+        <!-- Theme Toggle + Mobile Menu Toggle -->
+        <div class="flex items-center space-x-2">
+          <button
+            @click="themeStore.toggleTheme"
+            class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition"
+            aria-label="Toggle Theme"
+          >
+            <MoonIcon v-if="themeStore.darkMode" class="h-5 w-5" />
+            <SunIcon v-else class="h-5 w-5" />
+          </button>
 
-        <!-- Mobile Menu Toggle -->
-        <button
-          @click="mobileMenuOpen = !mobileMenuOpen"
-          class="md:hidden ml-2 p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition"
-          aria-label="Toggle Mobile Menu"
-        >
-          <svg v-if="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <svg v-else class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+          <!-- Hamburger Button (Only on Mobile) -->
+          <button
+            @click="mobileMenuOpen = !mobileMenuOpen"
+            class="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition"
+            aria-label="Toggle Mobile Menu"
+          >
+            <svg v-if="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg v-else class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Mobile Navigation Menu -->
+    <!-- Mobile Navigation Dropdown -->
     <transition name="fade">
       <div
         v-show="mobileMenuOpen"
@@ -114,6 +117,7 @@ onMounted(() => {
     </transition>
   </header>
 </template>
+
 
 <style scoped>
 .fade-enter-active,
