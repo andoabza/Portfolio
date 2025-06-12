@@ -17,30 +17,24 @@ const navLinks = [
 ]
 
 onMounted(() => {
-  // Navbar scroll animation
   let lastScroll = 0
   window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset
-    
     if (currentScroll <= 0) {
       navbar.value.classList.remove('scrolled')
       return
     }
-    
     if (currentScroll > lastScroll && !mobileMenuOpen.value) {
       navbar.value.classList.add('scrolled', 'hidden')
     } else {
       navbar.value.classList.remove('hidden')
     }
-    
     if (currentScroll < lastScroll) {
       navbar.value.classList.remove('scrolled')
     }
-    
     lastScroll = currentScroll
   })
-  
-  // Animate nav links
+
   gsap.from('.nav-link', {
     opacity: 0,
     y: -20,
@@ -52,22 +46,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <header 
+  <header
     ref="navbar"
     class="fixed w-full z-50 transition-all duration-500 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
-
-        <a 
-          href="#home" 
-          class="flex-shrink-0 flex items-center text-xl font-bold text-primary-600 dark:text-primary-400"
-        >
-          <img src="../assets/andamlak-logo.png" alt="logo" width="100" />
+        <!-- Logo -->
+        <a href="#home" class="flex items-center text-xl font-bold text-primary-600 dark:text-primary-400">
+          <img src="../assets/andamlak-logo.png" alt="logo" class="h-10 w-auto" />
         </a>
-        
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex space-x-8">
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex space-x-6">
           <a
             v-for="link in navLinks"
             :key="link.name"
@@ -77,61 +68,60 @@ onMounted(() => {
             {{ link.name }}
           </a>
         </nav>
-        
+
         <!-- Theme Toggle -->
         <button
           @click="themeStore.toggleTheme"
-          class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition-colors duration-300"
-          aria-label="Toggle dark mode"
+          class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition"
+          aria-label="Toggle Theme"
         >
           <MoonIcon v-if="themeStore.darkMode" class="h-5 w-5" />
           <SunIcon v-else class="h-5 w-5" />
         </button>
-        
-        <!-- Mobile menu button -->
+
+        <!-- Mobile Menu Toggle -->
         <button
           @click="mobileMenuOpen = !mobileMenuOpen"
-          class="md:hidden p-2 rounded-full text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition-colors duration-300"
-          aria-label="Toggle menu"
+          class="md:hidden ml-2 p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition"
+          aria-label="Toggle Mobile Menu"
         >
-          <svg
-            class="h-6 w-6"
-            :class="{ 'hidden': mobileMenuOpen, 'block': !mobileMenuOpen }"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
+          <svg v-if="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
-          <svg
-            class="h-6 w-6"
-            :class="{ 'hidden': !mobileMenuOpen, 'block': mobileMenuOpen }"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
+          <svg v-else class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
     </div>
-    
-    <!-- Mobile Navigation -->
-    <div 
-      class="md:hidden transition-all duration-300 overflow-hidden"
-      :class="{ 'max-h-0': !mobileMenuOpen, 'max-h-screen': mobileMenuOpen }"
-    >
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+
+    <!-- Mobile Navigation Menu -->
+    <transition name="fade">
+      <div
+        v-show="mobileMenuOpen"
+        class="md:hidden px-4 pt-2 pb-4 space-y-2 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+      >
         <a
           v-for="link in navLinks"
           :key="link.name"
           :href="link.href"
           @click="mobileMenuOpen = false"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary-600 dark:hover:text-primary-400 transition"
         >
           {{ link.name }}
         </a>
       </div>
-    </div>
+    </transition>
   </header>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
