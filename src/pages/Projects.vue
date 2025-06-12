@@ -14,7 +14,7 @@ const projects = ref([
     title: 'Ethiotravel Platform',
     description: 'A full-featured a fully functional travel app.',
     technologies: ['Vue 3', 'Nuxt.js', 'Node.js', 'MongoDB', 'Python'],
-    image: '../assets/images/ethiotravel-photo.png',
+    image: '/assets/images/ethiotravel-photo.png',
     links: [
       { label: 'Live Demo', url: 'https://ethiotravel..vercel.app' },
       { label: 'View Code', url: 'https://github.com/andoabza/ethiotravel' }
@@ -30,7 +30,7 @@ const projects = ref([
     title: 'Cloud Managment App',
     description: 'Kanban-style Cloud tool with real-time collaboration features and Cloud tracking.',
     technologies: ['React', 'Laravel', 'Nodejs', 'Tailwind CSS', 'WebSockets'],
-    image: '../assets/images/cloudytech-photo.png',
+    image: '/assets/images/cloudytech-photo.png',
     links: [
       { label: 'Live Demo', url: 'https://cloudy.42web.io' },
       { label: 'View Code', url: 'https://github.com/andoabza/Cloudytech' }
@@ -46,7 +46,7 @@ const projects = ref([
     title: 'Betna',
     description: 'Online House Renting App.',
     technologies: ['Vite', 'React', 'Nodejs', 'Tailwind CSS'],
-    image: '../assets/images/Betna.webp',
+    image: '/assets/images/Betna.webp',
     links: [
       { label: 'Live Demo', url: 'https://betna.vercel.app' },
       { label: 'View Code', url: 'https://github.com/andoabza/Betna' }
@@ -60,7 +60,7 @@ const projects = ref([
   }
 ]);
 
-const filters = ref(['All', 'Vue', 'Node.js', 'Nuxt', 'Firebase'])
+const filters = ref(['All', 'Vue', 'Node.js', 'Laravel', 'React'])
 const activeFilter = ref('All')
 
 const filteredProjects = computed(() => {
