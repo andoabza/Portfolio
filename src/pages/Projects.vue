@@ -18,7 +18,7 @@ const projects = ref([
     features: ['Address with filters', 'Map', 'User dashboard', 'Places']
   },
   {
-    title: 'Cloud Managment App',
+    title: 'Cloud Management App',
     description: 'Kanban-style Cloud tool with real-time collaboration features and Cloud tracking.',
     technologies: ['React', 'Laravel', 'Nodejs', 'Tailwind CSS', 'WebSockets'],
     image: 'cloudytech-photo.png',
@@ -82,6 +82,11 @@ const filteredProjects = computed(() => {
         </button>
       </div>
 
+      <!-- Debug projects count -->
+      <div class="mb-6 text-center text-sm text-gray-500">
+        Projects count: {{ filteredProjects.length }}
+      </div>
+
       <!-- Projects grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-animate="fade">
         <div
@@ -91,7 +96,7 @@ const filteredProjects = computed(() => {
         >
           <div class="relative h-48 overflow-hidden">
             <img
-              :src="require(`../assets/images/${project.image}`)"
+              :src="new URL(`../assets/images/${project.image}`, import.meta.url).href"
               :alt="project.title + ' screenshot'"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
