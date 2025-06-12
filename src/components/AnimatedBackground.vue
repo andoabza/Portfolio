@@ -5,6 +5,7 @@ import * as THREE from 'three'
 const canvas = ref(null)
 
 let scene, camera, renderer, group, clock
+let angle = 0
 
 const init = () => {
   scene = new THREE.Scene()
@@ -47,8 +48,16 @@ const init = () => {
 
 const animate = () => {
   const elapsed = clock.getElapsedTime()
+
   group.rotation.y = window.scrollY / 500
-  group.rotation.x = (window.scrollY / 1000)
+  group.rotation.x = Math.sin(elapsed * 0.5) * 0.3
+  group.rotation.z = Math.cos(elapsed * 0.5) * 0.3
+
+  group.children.forEach((child, i) => {
+    child.scale.setScalar(1 + 0.3 * Math.sin(elapsed * 2 + i))
+    child.material.emissiveIntensity = 0.5 + 0.5 * Math.sin(elapsed * 2 + i)
+  })
+
   renderer.render(scene, camera)
   requestAnimationFrame(animate)
 }
