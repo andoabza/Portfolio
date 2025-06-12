@@ -10,7 +10,7 @@ let angle = 0
 const init = () => {
   scene = new THREE.Scene()
   camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
-  camera.position.set(0, 0, 45)
+  camera.position.set(0, 0, window.innerWidth > 768 ? 60 : 30)
 
   renderer = new THREE.WebGLRenderer({ canvas: canvas.value, alpha: true, antialias: true })
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -22,14 +22,14 @@ const init = () => {
   group = new THREE.Group()
   scene.add(group)
 
-  const voxelSize = 1
-  const spacing = 1.3
+  const voxelSize = window.innerWidth > 768 ? 1.3 : 0.8
+  const spacing = window.innerWidth > 768 ? 1.5 : 1.0
   const geometry = new THREE.BoxGeometry(voxelSize, voxelSize, voxelSize)
   const material = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, emissive: 0x3366ff, emissiveIntensity: 0.6 })
 
-  for (let x = -2; x <= 2; x++) {
-    for (let y = -2; y <= 2; y++) {
-      for (let z = -2; z <= 2; z++) {
+  for (let x = -3; x <= 3; x++) {
+    for (let y = -3; y <= 3; y++) {
+      for (let z = -3; z <= 3; z++) {
         if (Math.random() < 0.6) continue
         const cube = new THREE.Mesh(geometry, material.clone())
         cube.position.set(x * spacing, y * spacing, z * spacing)
@@ -87,5 +87,8 @@ onUnmounted(() => {
 <style scoped>
 canvas {
   background-color: black;
+  width: 100vw;
+  height: 100vh;
+  display: block;
 }
 </style>
