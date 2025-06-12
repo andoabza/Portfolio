@@ -65,7 +65,7 @@ function getImagePath(filename) {
 </script>
 
 <template>
-  <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+  <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 relative">
     <AnimatedBackground />
 
     <div class="max-w-7xl mx-auto">
