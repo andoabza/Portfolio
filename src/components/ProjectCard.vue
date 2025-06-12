@@ -10,7 +10,7 @@
   >
     <div class="relative h-48 overflow-hidden">
       <img
-        :src="require(`../assets/projects/${project.image}`)"
+        :src="require(`../assets/images/${project.image}`)"
         :alt="project.title + ' screenshot'"
         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         loading="lazy"
