@@ -87,7 +87,7 @@ const toggleTerminal = () => {
 </script>
 
 <template>
-  <section id="about" class="z-10 text-gray-50 py-20 px-4 sm:px-6 lg:px-8">
+  <section id="about" class="text-gray-50 py-20 px-4 sm:px-6 lg:px-8">
     <AnimatedBackground />
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16">
