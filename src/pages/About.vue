@@ -13,24 +13,24 @@ const showTerminal = ref(false)
 
 const timelineData = [
     {
-    year: '2025-Present',
-    title: 'Computer Science Degree',
-    company: 'State University',
-    description: 'Specialized in web technologies and human-computer interaction',
-    icon: 'graduation-cap'
-  },  
-    {
-    year: '2023-Present',
+    year: '2022-2023',
+    title: 'Alx Software Program',
+    company: 'Holberton School',
+    description: 'A 12-month (70 hrs/week) immersive programme that prepares participants for a global career as a Full-Stack Developer',
+    icon: 'code'
+  },
+  {
+    year: '2024-2025',
     title: 'FullStack Developer (MERN)',
     company: 'Nile Technology Solutions',
     description: 'Working with a team to build scalable web applications using Vue.js and Node.js',
     icon: 'paint-brush'
   },
   {
-    year: '2022-2023',
-    title: 'Alx Software Program',
-    company: 'Holberton School',
-    description: 'A 12-month (70 hrs/week) immersive programme that prepares participants for a global career as a Full-Stack Developer',
+    year: '2023-Present',
+    title: 'FullStack Developer',
+    company: 'SolvX',
+    description: 'Working with my team to develop revolutionary ideas that will help peoples day to day problems',
     icon: 'code'
   },
   {
