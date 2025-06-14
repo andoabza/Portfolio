@@ -2,8 +2,8 @@
   <div class="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
     <div class="relative h-48 overflow-hidden">
       <img 
-        :src="project.image" 
-        :alt="project.name + ' screenshot'" 
+        :src="`../assets/projects/{{ project.image }}`" 
+        :alt="project.title + ' screenshot'" 
         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         loading="lazy"
       />
