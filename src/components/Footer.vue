@@ -45,7 +45,6 @@ onMounted(() => {
 <template>
   <footer class=" text-gray-300 pt-16 pb-8 px-4 sm:px-6 lg:px-8 relative">
     <!-- Decorative elements -->
-     <AnimatedBackground />
     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent opacity-20"></div>
     
     <div class="max-w-7xl mx-auto">
