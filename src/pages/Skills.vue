@@ -148,7 +148,7 @@ const toggleView = () => {
                 </span>
                 <span class="text-sm text-gray-500">{{ skill.level }}%</span>
               </div>
-              <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div class="h-2 rounded-full overflow-hidden" :class="`bg-${skill.color}`">
                <SkillMeter 
   :name="skill.name"
   :level="skill.level"
