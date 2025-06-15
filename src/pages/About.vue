@@ -13,19 +13,24 @@
 
       <div class="flex justify-center mb-12">
         <div class="inline-flex rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
-          <button
-            v-for="tab in ['bio', 'timeline', 'hobbies']"
-            :key="tab"
-            @click="activeTab = tab"
-            class="px-6 py-2 text-sm font-semibold rounded-md transition-colors duration-300 capitalize"
-            :class="{
-              'bg-gray-50 dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow': activeTab === tab,
-              'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700': activeTab !== tab
-            }"
-          >
-            {{ tab }}
-          </button>
-        </div>
+  <button
+    v-for="tab in [
+      { id: 'bio', icon: UserIcon },
+      { id: 'timeline', icon: CalendarIcon },
+      { id: 'hobbies', icon: SparklesIcon }
+    ]"
+    :key="tab.id"
+    @click="activeTab = tab.id"
+    class="px-6 py-2 text-sm font-semibold rounded-md transition-colors duration-300 capitalize flex items-center"
+    :class="{
+      'bg-gray-50 dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow': activeTab === tab.id,
+      'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700': activeTab !== tab.id
+    }"
+  >
+    <component :is="tab.icon" class="h-4 w-4 mr-2" />
+    {{ tab.id }}
+  </button>
+</div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -209,8 +214,11 @@ import {
   GlobeEuropeAfricaIcon,
   BookOpenIcon,
   MusicalNoteIcon,
-} from '@heroicons/vue/24/outline'
-
+  UserIcon,          
+  CalendarIcon, 
+  SparklesIcon
+}
+  
 gsap.registerPlugin(ScrollTrigger)
 
 const activeTab = ref('bio')
