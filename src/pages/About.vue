@@ -201,7 +201,7 @@ const toggleTerminal = () => {
         <div v-if="activeTab === 'bio'" class="sticky top-24">
           <div class="max-w-xs w-full mx-auto rounded-xl shadow-lg overflow-hidden">
             <img
-              src="/profile-photo.jpg"
+              src="../assets/images/profile-photo.jpg"
               alt="Profile photo"
               class="w-full h-auto rounded-xl"
               loading="lazy"
