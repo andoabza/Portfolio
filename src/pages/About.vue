@@ -217,7 +217,7 @@ import {
   UserIcon,          
   CalendarIcon, 
   SparklesIcon
-}
+} from '@heroicons/vue/24/outline'
   
 gsap.registerPlugin(ScrollTrigger)
 
