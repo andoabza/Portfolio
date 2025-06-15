@@ -5,11 +5,11 @@ import * as THREE from 'three'
 const canvas = ref(null)
 
 let scene, camera, renderer, group, clock
-let angle = 0
+let angle = 30
 
 const init = () => {
   scene = new THREE.Scene()
-  camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000)
+  camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 0.1, 1000)
   camera.position.set(0, 0, window.innerWidth > 768 ? 60 : 30)
 
   renderer = new THREE.WebGLRenderer({ canvas: canvas.value, alpha: true, antialias: true })
