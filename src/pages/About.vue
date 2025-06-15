@@ -1,91 +1,3 @@
-<script setup>
-import { ref, onMounted } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Terminal from '../components/Terminal.vue'
-import TimelineItem from '../components/TimelineItem.vue'
-import AnimatedBackground from '../components/AnimatedBackground.vue'
-
-gsap.registerPlugin(ScrollTrigger)
-
-const activeTab = ref('bio')
-const showTerminal = ref(false)
-
-const timelineData = [
-    {
-    year: '2022-2023',
-    title: 'Alx Software Program',
-    company: 'Holberton School',
-    description: 'A 12-month (70 hrs/week) immersive programme that prepares participants for a global career as a Full-Stack Developer',
-    icon: 'code'
-  },
-  {
-    year: '2024-2025',
-    title: 'FullStack Developer (MERN)',
-    company: 'Nile Technology Solutions',
-    description: 'Working with a team to build scalable web applications using Vue.js and Node.js',
-    icon: 'paint-brush'
-  },
-  {
-    year: '2023-Present',
-    title: 'FullStack Developer',
-    company: 'SolvX',
-    description: 'Working with my team to develop revolutionary ideas that will help peoples day to day problems',
-    icon: 'code'
-  },
-  {
-    year: '2021-2022',
-    title: 'Coding Instructor',
-    company: 'Codejika',
-    description: 'instructed HighSchool Students how to Code in HTML, CSS, Javascript and Python',
-    icon: 'laptop'
-  }
-]
-
-const hobbies = [
-  { name: 'Photography', icon: 'camera', description: 'Capturing moments and landscapes' },
-  { name: 'Hiking', icon: 'mountain', description: 'Exploring nature trails on weekends' },
-  { name: 'Gaming', icon: 'gamepad', description: 'Indie games and classic RPGs' },
-  { name: 'Reading', icon: 'book', description: 'Sci-fi and tech nonfiction' }
-]
-
-onMounted(() => {
-  // Animate timeline items
-  gsap.utils.toArray('.timeline-item').forEach((item, i) => {
-    gsap.from(item, {
-      opacity: 0,
-      y: 50,
-      scrollTrigger: {
-        trigger: item,
-        start: 'top 80%',
-        toggleActions: 'play none none none'
-      },
-      duration: 0.8,
-      delay: i * 0.15
-    })
-  })
-
-  // Animate hobby cards
-  gsap.utils.toArray('.hobby-card').forEach((card, i) => {
-    gsap.from(card, {
-      opacity: 0,
-      scale: 0.8,
-      scrollTrigger: {
-        trigger: card,
-        start: 'top 80%',
-        toggleActions: 'play none none none'
-      },
-      duration: 0.6,
-      delay: i * 0.1
-    })
-  })
-})
-
-const toggleTerminal = () => {
-  showTerminal.value = !showTerminal.value
-}
-</script>
-
 <template>
   <section id="about" class="text-gray-50 py-20 px-4 sm:px-6 lg:px-8">
     <AnimatedBackground />
@@ -117,25 +29,25 @@ const toggleTerminal = () => {
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        <!-- Bio Column -->
+        <!-- Bio Section -->
         <div v-if="activeTab === 'bio'" class="space-y-8">
           <div class="bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg p-8">
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Who Am I?
             </h3>
             <p class="text-gray-600 dark:text-gray-300 mb-4">
-              I'm a passionate FullStack developer with 2+ years of experience creating digital experiences that matter. 
+              I'm a passionate Full Stack Developer with 2+ years of experience creating digital experiences that matter.
               My journey in tech started when I built my first website at 18, and I've been hooked ever since.
             </p>
             <p class="text-gray-600 dark:text-gray-300 mb-4">
-              When I'm not coding, you can find me hiking in the mountains, experimenting with photography, 
-              or reading the latest Biography novel. I believe great software is built at the intersection of 
+              When I'm not coding, you can find me hiking in the mountains, experimenting with photography,
+              or reading the latest Biography novel. I believe great software is built at the intersection of
               technology and human needs.
             </p>
             <div class="mt-6">
               <button
                 @click="toggleTerminal"
-                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md shadow-sm text-gray-50 bg-primary-600 hover:bg-primary-700 transition-colors w-full sm:w-auto text-center sm:text-left"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md shadow-sm text-gray-50 bg-primary-600 hover:bg-primary-700 transition-colors w-full sm:w-auto"
               >
                 {{ showTerminal ? 'Hide' : 'Show' }} Developer Terminal
                 <component :is="showTerminal ? 'chevron-up' : 'chevron-down'" class="ml-2 h-4 w-4" />
@@ -195,17 +107,46 @@ const toggleTerminal = () => {
           </div>
         </div>
 
-        <!-- Timeline and Hobbies omit for brevity -->
-
-        <!-- Profile photo and Download button -->
-        <div v-if="activeTab === 'bio'" class="sticky top-24">
-          <div class="max-w-xs w-full mx-auto rounded-xl shadow-lg overflow-hidden">
-            <img
-              src="../assets/images/profile-photo.jpg"
-              alt="Profile photo"
-              class="w-full h-auto rounded-xl"
-              loading="lazy"
+        <!-- Timeline Section -->
+        <div v-else-if="activeTab === 'timeline'" class="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-lg">
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            My Experience Timeline
+          </h3>
+          <div class="space-y-6">
+            <TimelineItem
+              v-for="item in timeline"
+              :key="item.date"
+              :item="item"
             />
+          </div>
+        </div>
+
+        <!-- Hobbies Section -->
+        <div v-else-if="activeTab === 'hobbies'" class="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-lg">
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            My Hobbies
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div
+              v-for="(hobby, index) in hobbies"
+              :key="index"
+              class="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg text-center"
+            >
+              <component :is="hobby.icon" class="mx-auto h-12 w-12 text-primary-600 dark:text-primary-400 mb-4" />
+              <h4 class="text-lg font-semibold mb-2">
+                {{ hobby.name }}
+              </h4>
+              <p class="text-gray-600 dark:text-gray-400">
+                {{ hobby.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div class="sticky top-24">
+          <div class="max-w-xs w-full mx-auto rounded-xl shadow-lg overflow-hidden">
+            <img src="../assets/images/profile-photo.jpg" alt="Profile photo" class="w-full h-auto rounded-xl" loading="lazy" />
             <div class="p-6">
               <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
                 Quick Facts
@@ -226,14 +167,14 @@ const toggleTerminal = () => {
                 <li class="flex items-start">
                    <component :is="'academic-cap'" class="flex-shrink-0 h-5 w-5 text-gray-500 dark:text-gray-400 mr-3" />
                    <span class="text-gray-600 dark:text-gray-300">
-                     ALX 12Months Software Engineering Program Alumni
+                     ALX 12-Month Software Engineering Alumni
                    </span>
                 </li>
               </ul>
-              <a 
-                href="/Developer-Resume.pdf" 
+              <a
+                href="/Developer-Resume.pdf"
                 download
-                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md shadow-sm text-gray-50 bg-primary-600 hover:bg-primary-700 transition-colors w-full sm:w-auto text-center sm:text-left"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md shadow-sm text-gray-50 bg-primary-600 hover:bg-primary-700 transition-colors w-full sm:w-auto"
               >
                 Download Resume
                 <component :is="'download'" class="ml-2 h-4 w-4" />
@@ -246,6 +187,42 @@ const toggleTerminal = () => {
     </div>
   </section>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import AnimatedBackground from '@/components/AnimatedBackground.vue'
+import TimelineItem from '@/components/TimelineItem.vue'
+import Terminal from '@/components/Terminal.vue'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const activeTab = ref('bio')
+const showTerminal = ref(false)
+
+const toggleTerminal = () => {
+  showTerminal.value = !showTerminal.value
+}
+
+const timeline = ref([
+  { date: '2022', title: 'Started coding journey', description: 'Began exploring web technologies and coding fundamentals.' },
+  { date: '2023', title: 'Full Stack Training', description: 'Enrolled in 12-month ALX Software Engineering program, mastered fundamentals and modern stack.' },
+  { date: '2023', title: 'Junior Developer', description: 'Landed first job, contributing to production code and developing UI components.' },
+  { date: '2024-Present', title: 'Full Stack Engineer', description: 'Design and implement scalable applications, mentoring junior engineers, and growing my expertise daily.' }
+])
+
+const hobbies = ref([
+  { name: 'Photography', icon: 'camera', description: 'Capturing stories through the viewfinder and freezing moments in time.' },
+  { name: 'Hiking', icon: 'mountain', description: 'Exploring nature, challenging myself, and staying physically active.' },
+  { name: 'Reading', icon: 'book-open', description: 'Diving into books — from technology to psychology — to broaden my knowledge and perspectives.' },
+  { name: 'Music', icon: 'music-note', description: 'Creating, listening, and appreciating all kinds of musical expression.' }
+])
+
+onMounted(() => {
+  // Animations can be initialized here if needed.
+})
+</script>
 
 <style scoped>
 .fade-enter-active,
