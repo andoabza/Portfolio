@@ -192,9 +192,9 @@
 import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import AnimatedBackground from '@/components/AnimatedBackground.vue'
-import TimelineItem from '@/components/TimelineItem.vue'
-import Terminal from '@/components/Terminal.vue'
+import AnimatedBackground from '../components/AnimatedBackground.vue'
+import TimelineItem from '../components/TimelineItem.vue'
+import Terminal from '../components/Terminal.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
