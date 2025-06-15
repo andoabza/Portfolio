@@ -48,7 +48,7 @@ onMounted(() => {
 <template>
   <header
     ref="navbar"
-    class="fixed w-full z-50 transition-all duration-500 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800"
+    class="fixed w-full z-50 transition-all duration-500 bg-gray-200 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
@@ -59,7 +59,7 @@ onMounted(() => {
         </a>
 
         <!-- Desktop Navigation (Hidden on Mobile) -->
-        <nav class="hidden lg:flex space-x-6">
+        <nav class="sm:hidden flex space-x-6">
           <a
             v-for="link in navLinks"
             :key="link.name"
@@ -84,7 +84,7 @@ onMounted(() => {
           <!-- Hamburger Button (Only on Mobile) -->
           <button
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="sm:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition"
+            class="lg:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none transition"
             aria-label="Toggle Mobile Menu"
           >
             <svg v-if="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,7 +102,7 @@ onMounted(() => {
     <transition name="fade">
       <div
         v-show="mobileMenuOpen"
-        class="sm:hidden px-4 pt-2 pb-4 space-y-2 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+        class="lg:hidden px-4 pt-2 pb-4 space-y-2 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
       >
         <a
           v-for="link in navLinks"
