@@ -182,7 +182,7 @@
                 class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md shadow-sm text-gray-50 bg-primary-600 hover:bg-primary-700 transition-colors w-full sm:w-auto"
               >
                 Download Resume
-                <DownloadIcon class="ml-2 h-4 w-4" />
+                <ArrowDownTrayIcon class="ml-2 h-4 w-4" />
               </a>
             </div>
           </div>
@@ -209,7 +209,7 @@ import {
   ChevronUpIcon,
   MapPinIcon,
   BriefcaseIcon,
-  DownloadIcon,
+  ArrowDownTrayIcon,
   CameraIcon,
   GlobeEuropeAfricaIcon,
   BookOpenIcon,
