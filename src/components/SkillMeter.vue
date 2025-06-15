@@ -22,7 +22,7 @@ const meter = ref(null)
 
 onMounted(() => {
   gsap.fromTo(meter.value, 
-    { width: '0%' },
+    { width: '100%' },
     { 
       width: `${props.level}%`,
       duration: 1.5,
@@ -44,7 +44,7 @@ onMounted(() => {
         ref="meter"
         class="h-full rounded-full"
         :class="`bg-${color}-500`"
-        :style="{ width: '0%' }"
+        :style="{ width: '10%' }"
       />
     </div>
   </div>
