@@ -14,7 +14,6 @@ const props = defineProps({
 
 <template>
   <div class="relative lg:flex lg:items-center lg:justify-between mb-8">
-    <!-- Left-aligned items -->
     <div 
       class="lg:w-5/12 mb-4 lg:mb-0" 
       :class="{ 'lg:order-1': position === 'left', 'lg:order-3': position === 'right' }"
@@ -34,7 +33,6 @@ const props = defineProps({
         </p>
       </div>
     </div>
-
     <!-- Center year marker -->
     <div class="hidden lg:block lg:order-2 lg:w-2/12 lg:px-4">
       <div class="flex items-center justify-center h-full">
@@ -44,16 +42,17 @@ const props = defineProps({
       </div>
     </div>
 
+
     <!-- Right-aligned year (mobile) / left-aligned year (desktop) -->
     <div 
       class="lg:w-5/12 lg:order-3"
       :class="{ 'lg:order-1': position === 'right' }"
     >
       <div class="flex items-center lg:justify-end">
-        <div class="lg:hidden flex-shrink-0 w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center text-primary-600 dark:text-primary-300 mr-4">
+        <div class="lg:hidden flex-shrink-0 w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center text-white mr-4">
           <component :is="item.icon" class="h-5 w-5" />
         </div>
-        <span class="text-lg font-medium text-gray-900 dark:text-white">
+        <span class="text-lg font-medium text-white">
           {{ item.year }}
         </span>
       </div>
