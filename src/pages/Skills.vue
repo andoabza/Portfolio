@@ -118,7 +118,7 @@ const toggleView = () => {
               </h3>
               <button
                 @click="toggleView"
-                class="text-sm px-3 py-1 rounded-md bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300"
+                class="text-sm px-3 py-1 rounded-md  bg-gray-700 hover:bg-gray-500 dark:hover:bg-gray-600 transition-colors duration-300"
               >
                 {{ isChart3D ? '2D View' : '3D View' }}
               </button>
