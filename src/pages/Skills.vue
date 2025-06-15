@@ -13,10 +13,10 @@ const skills = ref({
     { name: 'Vue.js', level: 95, icon: 'vuejs', color: 'green' },
     { name: 'React', level: 85, icon: 'react', color: 'blue' },
     { name: 'TypeScript', level: 90, icon: 'typescript', color: 'blue' },
-    { name: 'Tailwind CSS', level: 98, icon: 'tailwindcss', color: 'teal' }
+    { name: 'Tailwind CSS', level: 98, icon: 'tailwindcss', color: 'green' }
   ],
   backend: [
-    { name: 'Node.js', level: 92, icon: 'nodejs', color: 'green' },
+    { name: 'Node.js', level: 92, icon: 'nodejs', color: 'blue' },
     { name: 'Express', level: 88, icon: 'server', color: 'green' },
     { name: 'Python', level: 80, icon: 'python', color: 'blue' },
     { name: 'PostgreSQL', level: 85, icon: 'database', color: 'blue' }
@@ -28,10 +28,10 @@ const skills = ref({
     { name: 'Kubernetes', level: 70, icon: 'kubernetes', color: 'blue' }
   ],
   tools: [
-    { name: 'Git', level: 95, icon: 'git', color: 'orange' },
+    { name: 'Git', level: 95, icon: 'git', color: 'green' },
     { name: 'VS Code', level: 97, icon: 'vscode', color: 'blue' },
     { name: 'Figma', level: 85, icon: 'figma', color: 'purple' },
-    { name: 'Jest', level: 83, icon: 'testing', color: 'red' }
+    { name: 'Jest', level: 83, icon: 'testing', color: 'green' }
   ]
 })
 
@@ -54,9 +54,9 @@ onMounted(() => {
       scrollTrigger: {
         trigger: meter,
         start: 'top 80%',
-        toggleActions: 'play none none none'
+        toggleActions: 'play play play play'
       },
-      duration: 1.5,
+      duration: 0.5,
       ease: 'power3.out'
     })
   })
