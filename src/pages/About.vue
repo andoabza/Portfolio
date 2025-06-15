@@ -206,7 +206,7 @@ import {
   BriefcaseIcon,
   DownloadIcon,
   CameraIcon,
-  MountainIcon,
+  TreeIcon,
   BookOpenIcon,
   MusicalNoteIcon,
 } from '@heroicons/vue/24/outline'
@@ -229,7 +229,7 @@ const timeline = ref([
 
 const hobbies = ref([
   { name: 'Photography', icon: CameraIcon, description: 'Capturing stories through the viewfinder and freezing moments in time.' },
-  { name: 'Hiking', icon: MountainIcon, description: 'Exploring nature, challenging myself, and staying physically active.' },
+  { name: 'Hiking', icon: TreeIcon, description: 'Exploring nature, challenging myself, and staying physically active.' },
   { name: 'Reading', icon: BookOpenIcon, description: 'Diving into books — from technology to psychology — to broaden my knowledge and perspectives.' },
   { name: 'Music', icon: MusicalNoteIcon, description: 'Creating, listening, and appreciating all kinds of musical expression.' }
 ])
