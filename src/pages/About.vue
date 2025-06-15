@@ -247,28 +247,6 @@ const toggleTerminal = () => {
   </section>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import AnimatedBackground from '@/components/AnimatedBackground.vue'
-import TimelineItem from '@/components/TimelineItem.vue'
-import Terminal from '@/components/Terminal.vue'
-
-gsap.registerPlugin(ScrollTrigger)
-
-const activeTab = ref('bio')
-const showTerminal = ref(false)
-
-const toggleTerminal = () => {
-  showTerminal.value = !showTerminal.value
-}
-
-onMounted(() => {
-  // Animations remain the same...
-})
-</script>
-
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
