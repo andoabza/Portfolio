@@ -207,7 +207,7 @@ import {
   AcademicCapIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  MapMarkerIcon,
+  MapPinIcon,
   BriefcaseIcon,
   DownloadIcon,
   CameraIcon,
