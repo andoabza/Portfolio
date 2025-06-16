@@ -4,7 +4,7 @@
     class="fixed w-full z-50 transition-all duration-500 bg-white dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16 md:h-20">
+      <div class="flex justify-between items-center h-22 md:h-24">
         <!-- Logo -->
         <a href="#home" class="flex items-center">
           <div class="bg-gradient-to-r from-blue-500 to-purple-600 w-12 h-12 rounded-lg flex items-center justify-center">
