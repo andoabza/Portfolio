@@ -7,7 +7,7 @@
       <div class="flex justify-between items-center h-16 md:h-20">
         <!-- Logo -->
         <a href="#home" class="flex items-center">
-          <div class="bg-gradient-to-r from-blue-500 to-purple-600 w-10 h-10 rounded-lg flex items-center justify-center">
+          <div class="bg-gradient-to-r from-blue-500 to-purple-600 w-12 h-12 rounded-lg flex items-center justify-center">
             <span class="text-white font-bold text-xl">A</span>
           </div>
           <span class="ml-3 text-xl font-bold text-gray-900 dark:text-white">Portfolio</span>
@@ -33,13 +33,13 @@
         <div class="flex items-center space-x-2">
           <button
             @click="toggleTheme"
-            class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none transition"
+            class="p-4 rounded-full text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none transition"
             aria-label="Toggle Theme"
           >
-            <svg v-if="darkMode" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg v-if="darkMode" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
             </svg>
-            <svg v-else class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg v-else class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
           </button>
@@ -47,13 +47,13 @@
           <!-- Mobile Menu Button -->
           <button
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none transition"
+            class="md:hidden p-4 rounded-md text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none transition"
             aria-label="Toggle Mobile Menu"
           >
             <svg v-if="!mobileMenuOpen" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
-            <svg v-else class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg v-else class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -72,7 +72,7 @@
           :key="link.name"
           :href="link.href"
           @click="mobileMenuOpen = false"
-          class="block px-4 py-3 rounded-lg text-lg font-medium transition"
+          class="block px-4 py-3 rounded-lg text-lg font-large transition"
           :class="{
             'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30': activeLink === link.href,
             'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800': activeLink !== link.href
