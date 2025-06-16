@@ -10,7 +10,7 @@
           <div class="bg-gradient-to-r from-blue-500 to-purple-600 w-12 h-12 rounded-lg flex items-center justify-center">
             <span class="text-white font-bold text-xl">A</span>
           </div>
-          <span class="ml-3 text-xl font-bold text-gray-900 dark:text-white">.</span>
+          <span class="ml-3 text-xl font-bold text-gray-900 dark:text-white">\<\></span>
         </a>
 
         <!-- Desktop Navigation -->
